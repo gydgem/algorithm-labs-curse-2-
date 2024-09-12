@@ -4,7 +4,9 @@ project(GrapsLab1)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(GrapsLab1 main.cpp
-        GraffComponents/Vertex.cpp
-        GraffComponents/Vertex.h
-        GraffComponents/Edge.cpp
-        GraffComponents/Edge.h)
+        GraphComponents/Vertex.cpp
+        GraphComponents/Vertex.h
+        GraphComponents/Edge.cpp
+        GraphComponents/Edge.h
+        Graph.cpp
+        Graph.h)

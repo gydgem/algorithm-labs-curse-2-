@@ -56,7 +56,6 @@ namespace hgem {
         std::vector<TypeEdge> getAllEdge(){
             return outgoingEdges;
         }
-
     };
 
 } // hgem

@@ -42,7 +42,7 @@ namespace hgem {
         }
 
         void addEdge(TypeEdge edge){
-            if (&edge.getCurrentVerte() != this){
+            if (&edge.getCurrentVertex() != this){
                 throw std::invalid_argument("The edge does not belong to the current vertex.");
             }
 

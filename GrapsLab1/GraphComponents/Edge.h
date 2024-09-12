@@ -26,13 +26,9 @@ namespace hgem {
         TypeVertex &nextVertex;
 
     public:
-        explicit Edge(TypeVertex &currentVertex, TypeVertex &nextVertex)
-                : currentVertex(currentVertex), nextVertex(nextVertex) {
-        }
-
-        explicit Edge(TypeVertex &currentVertex, TypeVertex &nextVertex, TypeNameEdge nameEdge, TypeWeightEdge weightEdge)
-                : Edge(currentVertex, nextVertex), nameEdge(std::move(nameEdge)), weightEdge(std::move(weightEdge)) {
-        }
+        Edge(TypeVertex &currentVertex, TypeVertex &nextVertex, TypeNameEdge nameEdge, TypeWeightEdge weightEdge)
+                : nameEdge(std::move(nameEdge)), weightEdge(std::move(weightEdge)),
+                  currentVertex(currentVertex), nextVertex(nextVertex) {}
 
         TypeVertex &getCurrentVertex() const {
             return currentVertex;

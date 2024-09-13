@@ -26,7 +26,11 @@ namespace hgem {
         TypeVertex &targetVertex;
 
     public:
-        Edge(TypeVertex& sourceVertex, TypeVertex& nextVertex, TypeNameEdge nameEdge, TypeWeightEdge weightEdge)
+        Edge &operator=(const Edge &) = delete;
+
+        Edge &operator=(Edge&&) = delete;
+
+        Edge(TypeVertex &sourceVertex, TypeVertex &nextVertex, TypeNameEdge nameEdge, TypeWeightEdge weightEdge)
                 : nameEdge(std::move(nameEdge)),
                   weightEdge(std::move(weightEdge)),
                   sourceVertex(sourceVertex),

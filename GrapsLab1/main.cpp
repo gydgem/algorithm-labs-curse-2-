@@ -20,5 +20,4 @@ int main() {
         std::cout<<"(" << it->getTargetVertex().getNameVertex() << ") (" << it->getSourceVertex().getNameVertex() << ")\n";
     }
     std::cout << g.getVertex("a").getEdge("edge1").getTargetVertex().getNameVertex() << "\n";
-
 }

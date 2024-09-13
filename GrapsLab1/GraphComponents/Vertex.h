@@ -38,10 +38,6 @@ namespace hgem {
                 weightVertex(std::move(weightVertex)) {
         }
 
-        Vertex &operator=(const Vertex &) = delete;
-
-        Vertex &operator=(Vertex&&) = delete;
-
         const TypeNameVertex &getNameVertex() const{
             return nameVertex;
         }
@@ -50,7 +46,7 @@ namespace hgem {
             return weightVertex;
         }
 
-        void addEdge(TypeEdge edge) {
+        void addEdge(const TypeEdge &edge) {
             if (&edge.getSourceVertex() != this) {
                 throw std::invalid_argument("The edge does not belong to the current vertex.");
             }
@@ -59,7 +55,7 @@ namespace hgem {
                 throw std::invalid_argument("The edge already exists ");
             }
 
-            outgoingEdges.emplace(edge.getNameEdge(), std::move(edge));
+            outgoingEdges.emplace(edge.getNameEdge(), edge);
         }
 
         std::vector<TypeEdge> getAllEdges() {
@@ -71,7 +67,7 @@ namespace hgem {
             return result;
         }
 
-        TypeEdge getEdge(const TypeNameEdge &nameEdge) {
+        TypeEdge &getEdge(const TypeNameEdge &nameEdge) {
             if (outgoingEdges.find(nameEdge) == outgoingEdges.end()) {
                 throw std::invalid_argument("edge not found");
             }

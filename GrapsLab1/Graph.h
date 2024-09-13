@@ -5,6 +5,7 @@
 #ifndef GRAPSLAB1_GRAPH_H
 #define GRAPSLAB1_GRAPH_H
 
+#include <bits/stdc++.h>
 
 #include "GraphComponents/Edge.h"
 #include "GraphComponents/Vertex.h"
@@ -20,7 +21,7 @@ namespace hgem {
 
     private:
         std::map<TypeNameVertex, TypeVertex> vertices;
-        std::map<TypeNameEdge, TypeEdge&> edges;
+        std::map<TypeNameEdge, TypeEdge&> edges; // возможно стоит создать класс который позволит у разных вершин иметь рёбра одинакового названия
 
     public:
         void addVertex(const TypeNameVertex &nameVertex, const TypeWeightVertex &weightVertex) {
@@ -47,24 +48,25 @@ namespace hgem {
                 throw std::invalid_argument("Target vertex not found");
             }
 
+
             TypeVertex &sourceVertex = vertices.find(nameSourceVertex)->second;
             TypeVertex &targetVertex = vertices.find(nameTargetVertex)->second;
             TypeEdge edgeToAdd(sourceVertex, targetVertex, nameEdge, weightEdge);
-            
+
 
             sourceVertex.addEdge(edgeToAdd);
             edges.emplace(nameEdge, sourceVertex.getEdge(nameEdge));
         }
 
-        TypeVertex GetVertex(const TypeNameVertex &nameVertex) {
-            if (vertices.find(nameVertex)->second == vertices.end()) {
+        TypeVertex &getVertex(const TypeNameVertex &nameVertex) {
+            if (vertices.find(nameVertex) == vertices.end()) {
                 throw std::invalid_argument("Vertex not found");
             }
 
             return vertices.find(nameVertex)->second;
         }
 
-        TypeEdge GetEdge(const TypeNameEdge &nameEdge) {
+        TypeEdge &getEdge(const TypeNameEdge &nameEdge) {
             if (edges.find(nameEdge) == edges.end()) {
                 throw std::invalid_argument("edge not found");
             }

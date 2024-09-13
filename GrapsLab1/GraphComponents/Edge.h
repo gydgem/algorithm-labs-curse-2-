@@ -11,7 +11,7 @@
 
 namespace hgem {
 
-    template <class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
     class Vertex;
 
     template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
@@ -22,20 +22,23 @@ namespace hgem {
     private:
         TypeNameEdge nameEdge;
         TypeWeightEdge weightEdge;
-        TypeVertex &currentVertex;
-        TypeVertex &nextVertex;
+        TypeVertex &sourceVertex;
+        TypeVertex &targetVertex;
 
     public:
-        Edge(TypeVertex &currentVertex, TypeVertex &nextVertex, TypeNameEdge nameEdge, TypeWeightEdge weightEdge)
-                : nameEdge(std::move(nameEdge)), weightEdge(std::move(weightEdge)),
-                  currentVertex(currentVertex), nextVertex(nextVertex) {}
-
-        TypeVertex &getCurrentVertex() const {
-            return currentVertex;
+        Edge(TypeVertex& sourceVertex, TypeVertex& nextVertex, TypeNameEdge nameEdge, TypeWeightEdge weightEdge)
+                : nameEdge(std::move(nameEdge)),
+                  weightEdge(std::move(weightEdge)),
+                  sourceVertex(sourceVertex),
+                  targetVertex(targetVertex) {
         }
 
-        TypeVertex &getNextVertex() const {
-            return nextVertex;
+        TypeVertex &getSourceVertex() const {
+            return sourceVertex;
+        }
+
+        TypeVertex &getTargetVertex() const {
+            return targetVertex;
         }
 
         const TypeNameEdge &getNameEdge() const {

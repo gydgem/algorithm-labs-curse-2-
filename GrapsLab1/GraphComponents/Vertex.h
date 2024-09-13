@@ -10,7 +10,7 @@
 #include <vector>
 #include <exception>
 #include <stdexcept>
-
+#include <map>
 
 namespace hgem {
 
@@ -25,36 +25,49 @@ namespace hgem {
     private:
         TypeNameVertex nameVertex;
         TypeWeightVertex weightVertex;
-        std::vector<TypeEdge> outgoingEdges;
-        std::vector<TypeEdge> incomingEdges;
+        std::map<TypeNameEdge, TypeEdge> outgoingEdges; // you might want to replace it with a template
 
     public:
         explicit Vertex(TypeNameVertex nameVertex, TypeWeightVertex weightVertex) :
-        nameVertex(std::move(nameVertex)), weightVertex(std::move(weightVertex)){
+                nameVertex(std::move(nameVertex)),
+                weightVertex(std::move(weightVertex)) {
         }
 
-        const TypeNameVertex &getNameVertex(){
+        const TypeNameVertex &getNameVertex() {
             return nameVertex;
         }
 
-        const TypeWeightVertex &getWeightVertex(){
-            return nameVertex;
+        const TypeWeightVertex &getWeightVertex() {
+            return weightVertex;
         }
 
-        void addEdge(TypeEdge edge){
-            if (&edge.getCurrentVertex() != this){
+        void addEdge(TypeEdge edge) {
+            if (&edge.getSourceVertex() != this) {
                 throw std::invalid_argument("The edge does not belong to the current vertex.");
             }
 
-            outgoingEdges.push_back(edge);
-            edge.getNextVertex().incomingEdges.push_back(TypeEdge(edge.getNextVertex(),
-                                                                  edge.getCurrentVertex(),
-                                                                  edge.getNameEdge(),
-                                                                  edge.getWeightEdge()));
+            if (outgoingEdges.find(edge.getNameEdge()) != outgoingEdges.end()) {
+                throw std::invalid_argument("The edge already exists ");
+            }
+
+            outgoingEdges.emplace(edge.getNameEdge(), std::move(edge));
         }
 
-        std::vector<TypeEdge> getAllEdge(){
-            return outgoingEdges;
+        std::vector<TypeEdge> getAllEdges() {
+            std::vector<TypeEdge> result;
+
+            for (auto value: outgoingEdges)
+                result.emplace_back(value.second);
+
+            return result;
+        }
+
+        TypeEdge getEdge(const TypeNameEdge& nameEdge){
+            if (outgoingEdges.find(nameEdge) == outgoingEdges.end()) {
+                throw std::invalid_argument("edge not found");
+            }
+
+            return outgoingEdges.find(nameEdge)->second;
         }
     };
 

@@ -21,7 +21,7 @@ namespace hgem {
 
     private:
         std::map<TypeNameVertex, TypeVertex> vertices;
-        std::map<TypeNameEdge, TypeEdge&> edges; // возможно стоит создать класс который позволит у разных вершин иметь рёбра одинакового названия
+        std::map<TypeNameEdge, TypeEdge> edges; // возможно стоит создать класс который позволит у разных вершин иметь рёбра одинакового названия
 
     public:
         void addVertex(const TypeNameVertex &nameVertex, const TypeWeightVertex &weightVertex) {
@@ -54,8 +54,8 @@ namespace hgem {
             TypeEdge edgeToAdd(sourceVertex, targetVertex, nameEdge, weightEdge);
 
 
-            sourceVertex.addEdge(edgeToAdd);
-            edges.emplace(nameEdge, sourceVertex.getEdge(nameEdge));
+            edges.emplace(nameEdge, edgeToAdd);
+            sourceVertex.addEdge(edges.find(nameEdge)->second);
         }
 
         TypeVertex &getVertex(const TypeNameVertex &nameVertex) {

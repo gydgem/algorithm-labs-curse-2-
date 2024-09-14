@@ -30,7 +30,7 @@ namespace hgem {
     private:
         TypeNameVertex nameVertex;
         TypeWeightVertex weightVertex;
-        std::map<TypeNameEdge, TypeEdge> outgoingEdges; // you might want to replace it with a template
+        std::map<TypeNameEdge, TypeEdge&> outgoingEdges; // you might want to replace it with a template
 
     public:
         explicit Vertex(TypeNameVertex nameVertex, TypeWeightVertex weightVertex) :
@@ -46,7 +46,7 @@ namespace hgem {
             return weightVertex;
         }
 
-        void addEdge(const TypeEdge &edge) {
+        void addEdge(TypeEdge &edge) {
             if (&edge.getSourceVertex() != this) {
                 throw std::invalid_argument("The edge does not belong to the current vertex.");
             }
@@ -96,9 +96,9 @@ namespace hgem {
         friend Vertex;
 
     private:
-        std::map<TypeNameEdge, TypeEdge>::iterator pointerToEdge;
+        std::map<TypeNameEdge, TypeEdge&>::iterator pointerToEdge;
 
-        explicit iterator(std::map<TypeNameEdge, TypeEdge>::iterator pointerToEdge) : pointerToEdge(pointerToEdge){
+        explicit iterator(std::map<TypeNameEdge, TypeEdge&>::iterator pointerToEdge) : pointerToEdge(pointerToEdge){
         }
 
     public:

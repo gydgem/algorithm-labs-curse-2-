@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(GrapsLab1 main.cpp
         GraphComponents/Vertex.h
         GraphComponents/Edge.h
-        Graph.h)
+        Graph.h
+        Сommon/CommonIterators/MapSecondElementIterator.h)

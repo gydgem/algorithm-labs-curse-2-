@@ -14,10 +14,10 @@ int main() {
     g.addEdge("a", "c", "edge2",1);
     g.addEdge("b","c","edge3",2);
 
-    Graph::TypeVertex::iterator it = g.getVertex("a").begin();
-    for (;it != g.getVertex("a").end(); it++) {
-        std::cout << it->getNameEdge() << " " << it->getWeightEdge() << "\n";
-        std::cout<<"(" << it->getTargetVertex().getNameVertex() << ") (" << it->getSourceVertex().getNameVertex() << ")\n";
+    Graph::TypeVertex &v =  g.getVertex("a");
+    for (auto edge : v){
+        std::cout << edge.getSourceVertex().getNameVertex() << " " << edge.getTargetVertex().getNameVertex() << " " << edge.getNameEdge() << "\n";
     }
+
     std::cout << g.getVertex("a").getEdge("edge1").getTargetVertex().getNameVertex() << "\n";
 }

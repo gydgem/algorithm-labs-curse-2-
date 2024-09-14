@@ -15,7 +15,7 @@ int main() {
     g.addEdge("b","c","edge3",2);
 
     Graph::TypeVertex &v =  g.getVertex("a");
-    for (auto edge : v){
+    for (const auto& edge : v){
         std::cout << edge.getSourceVertex().getNameVertex() << " " << edge.getTargetVertex().getNameVertex() << " " << edge.getNameEdge() << "\n";
     }
 

@@ -12,7 +12,7 @@
 #include <exception>
 #include <stdexcept>
 #include <map>
-
+#include "../Сommon/CommonIterators/MapSecondElementIterator.h"
 
 namespace hgem {
 
@@ -85,63 +85,13 @@ namespace hgem {
     };
 
     template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
-    class Vertex<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>::iterator {
+    class Vertex<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>::iterator : public MapSecondElementIterator<TypeNameEdge, TypeEdge&> {
     public:
-        using iterator_category = std::bidirectional_iterator_tag;
-        using value_type = TypeEdge;
-        using difference_type = std::ptrdiff_t;
-        using pointer = value_type*;
-        using reference = value_type&;
 
         friend Vertex;
 
     private:
-        std::map<TypeNameEdge, TypeEdge&>::iterator pointerToEdge;
-
-        explicit iterator(std::map<TypeNameEdge, TypeEdge&>::iterator pointerToEdge) : pointerToEdge(pointerToEdge){
-        }
-
-    public:
-        iterator()= default;
-
-        ~iterator() = default;
-
-        reference operator*() const {
-            return pointerToEdge->second;
-        }
-
-        pointer operator->() {
-            return &pointerToEdge->second;
-        }
-
-        iterator& operator++() {
-            pointerToEdge++;
-            return *this;
-        }
-
-        iterator operator++(int) {
-            iterator temporary = *this;
-            pointerToEdge++;
-            return temporary;
-        }
-
-        iterator& operator--() {
-            pointerToEdge--;
-            return *this;
-        }
-
-        iterator operator--(int) {
-            iterator temporary = *this;
-            pointerToEdge--;
-            return temporary;
-        }
-
-        bool operator==(const iterator& other) {
-            return pointerToEdge == other.pointerToEdge;
-        }
-
-        bool operator!=(const iterator& other) {
-            return pointerToEdge != other.pointerToEdge;
+        explicit iterator(std::map<TypeNameEdge, TypeEdge&>::iterator it) : MapSecondElementIterator<TypeNameEdge, TypeEdge&> (it){
         }
     };
 

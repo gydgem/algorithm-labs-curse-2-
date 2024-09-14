@@ -16,13 +16,13 @@ namespace hgem {
         using iterator_category = std::bidirectional_iterator_tag;
         using value_type = TypeValue;
         using difference_type = std::ptrdiff_t;
-        using pointer = value_type*;
+        using pointer = std::add_pointer_t<std::remove_reference_t<value_type>>;
         using reference = value_type&;
 
     protected:
-        std::map<TypeKey, TypeValue>::iterator pointerToEdge;
+        std::map<TypeKey, TypeValue>::iterator pointerToMapSecondElement;
 
-        explicit MapSecondElementIterator(std::map<TypeKey, TypeValue>::iterator pointerToEdge) : pointerToEdge(pointerToEdge){
+        explicit MapSecondElementIterator(std::map<TypeKey, TypeValue>::iterator pointerToEdge) : pointerToMapSecondElement(pointerToEdge){
         }
 
     public:
@@ -31,41 +31,41 @@ namespace hgem {
         ~MapSecondElementIterator() = default;
 
         reference operator*() const {
-            return pointerToEdge->second;
+            return pointerToMapSecondElement->second;
         }
 
         pointer operator->() {
-            return &pointerToEdge->second;
+            return &pointerToMapSecondElement->second;
         }
 
         MapSecondElementIterator& operator++() {
-            pointerToEdge++;
+            pointerToMapSecondElement++;
             return *this;
         }
 
         MapSecondElementIterator operator++(int) {
             MapSecondElementIterator temporary = *this;
-            pointerToEdge++;
+            pointerToMapSecondElement++;
             return temporary;
         }
 
         MapSecondElementIterator& operator--() {
-            pointerToEdge--;
+            pointerToMapSecondElement--;
             return *this;
         }
 
         MapSecondElementIterator operator--(int) {
             MapSecondElementIterator temporary = *this;
-            pointerToEdge--;
+            pointerToMapSecondElement--;
             return temporary;
         }
 
         bool operator==(const MapSecondElementIterator& other) {
-            return pointerToEdge == other.pointerToEdge;
+            return pointerToMapSecondElement == other.pointerToMapSecondElement;
         }
 
         bool operator!=(const MapSecondElementIterator& other) {
-            return pointerToEdge != other.pointerToEdge;
+            return pointerToMapSecondElement != other.pointerToMapSecondElement;
         }
     };
 

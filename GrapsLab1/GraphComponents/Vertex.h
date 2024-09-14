@@ -16,16 +16,20 @@
 
 namespace hgem {
 
-    template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    template<class VertexNameT, class VertexWeightT, class EdgeNameT, class EdgeWeightT>
     class Edge;
 
-    template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    template<class VertexNameT, class VertexWeightT, class EdgeNameT, class EdgeWeightT>
     class Vertex {
     public:
+        using TypeNameVertex = VertexNameT;
+        using TypeWeightVertex = VertexWeightT;
+        using TypeNameEdge = EdgeNameT;
+        using TypeWeightEdge = EdgeWeightT;
         using TypeEdge = Edge<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>;
         using TypeVertex = Vertex<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>;
 
-        class iterator; //allows you to iterate along the edges of the graph
+        class iterator;
 
     private:
         TypeNameVertex nameVertex;
@@ -46,7 +50,7 @@ namespace hgem {
             return weightVertex;
         }
 
-        void addEdge(TypeEdge &edge) {
+        void bindOutgoingEdge(TypeEdge &edge) {
             if (&edge.getSourceVertex() != this) {
                 throw std::invalid_argument("The edge does not belong to the current vertex.");
             }
@@ -58,7 +62,7 @@ namespace hgem {
             outgoingEdges.emplace(edge.getNameEdge(), edge);
         }
 
-        std::vector<TypeEdge> getAllEdges() {
+        std::vector<TypeEdge> getAllOutgoingEdges() {
             std::vector<TypeEdge> result;
 
             for (auto value: outgoingEdges)
@@ -67,7 +71,7 @@ namespace hgem {
             return result;
         }
 
-        TypeEdge &getEdge(const TypeNameEdge &nameEdge) {
+        TypeEdge &getOutgoingEdge(const TypeNameEdge &nameEdge) {
             if (outgoingEdges.find(nameEdge) == outgoingEdges.end()) {
                 throw std::invalid_argument("edge not found");
             }
@@ -87,7 +91,6 @@ namespace hgem {
     template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
     class Vertex<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>::iterator : public MapSecondElementIterator<TypeNameEdge, TypeEdge&> {
     public:
-
         friend Vertex;
 
     private:

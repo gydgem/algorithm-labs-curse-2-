@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include "GraphComponents/Edge.h"
 #include "GraphComponents/Vertex.h"
 #include "Graph.h"
 
@@ -14,10 +13,16 @@ int main() {
     g.addEdge("a", "c", "edge2",1);
     g.addEdge("b","c","edge3",2);
 
-    Graph::TypeVertex &v =  g.getVertex("a");
-    for (const auto& edge : v){
+    std::cout << "*****************************************************************************************\n";
+    for (const auto& edge : g.getVertex("a")){
         std::cout << edge.getSourceVertex().getNameVertex() << " " << edge.getTargetVertex().getNameVertex() << " " << edge.getNameEdge() << "\n";
     }
+    std::cout << "*****************************************************************************************\n";
 
-    std::cout << g.getVertex("a").getEdge("edge1").getTargetVertex().getNameVertex() << "\n";
+    for (Graph::IteratorVertices it = g.beginVertices(); it != g.endVertices(); it++){
+        Graph::TypeVertex &vertex = *it;
+        std::cout << vertex.getNameVertex() << " " << vertex.getWeightVertex() << "\n";
+    }
+
+    std::cout << g.getVertex("a").getOutgoingEdge("edge1").getTargetVertex().getNameVertex() << "\n";
 }

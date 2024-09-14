@@ -9,15 +9,24 @@
 
 #include "GraphComponents/Edge.h"
 #include "GraphComponents/Vertex.h"
+#include "Сommon/CommonIterators/MapSecondElementIterator.h"
 #include <map>
 
 namespace hgem {
 
-    template <class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    template<class VertexNameT, class VertexWeightT, class EdgeNameT, class EdgeWeightT>
     class Graph {
     public:
-        using TypeVertex = Vertex<TypeNameEdge, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>;
-        using TypeEdge = hgem::Edge<TypeNameEdge, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>;
+        using TypeNameVertex = VertexNameT;
+        using TypeWeightVertex = VertexWeightT;
+        using TypeNameEdge = EdgeNameT;
+        using TypeWeightEdge = EdgeWeightT;
+        using TypeVertex = Vertex<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>;
+        using TypeEdge = Edge<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>;
+
+        class IteratorVertices;
+
+        class IteratorEdges;
 
     private:
         std::map<TypeNameVertex, TypeVertex> vertices;
@@ -55,7 +64,7 @@ namespace hgem {
 
 
             edges.emplace(nameEdge, edgeToAdd);
-            sourceVertex.addEdge(edges.find(nameEdge)->second);
+            sourceVertex.bindOutgoingEdge(edges.find(nameEdge)->second);
         }
 
         TypeVertex &getVertex(const TypeNameVertex &nameVertex) {
@@ -72,6 +81,46 @@ namespace hgem {
             }
 
             return edges.find(nameEdge)->second;
+        }
+
+        IteratorVertices beginVertices() {
+            return IteratorVertices(vertices.begin());
+        }
+
+        IteratorVertices endVertices() {
+            return IteratorVertices(vertices.end());
+        }
+
+        IteratorEdges beginEdges() {
+            return IteratorEdges(edges.begin());
+        }
+
+        IteratorEdges endEdges() {
+            return IteratorEdges(edges.end());
+        }
+    };
+
+    template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    class Graph<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>::IteratorVertices
+            : public MapSecondElementIterator<TypeNameVertex, TypeVertex> {
+    public:
+        friend Graph;
+
+    private:
+        explicit IteratorVertices(std::map<TypeNameVertex, TypeVertex>::iterator it)
+                : MapSecondElementIterator<TypeNameVertex, TypeVertex>(it) {
+        }
+    };
+
+    template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    class Graph<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>::IteratorEdges
+            : public MapSecondElementIterator<TypeNameEdge, TypeEdge> {
+    public:
+        friend Graph;
+
+    private:
+        explicit IteratorEdges(std::map<TypeNameEdge, TypeEdge> it)
+                : MapSecondElementIterator<TypeNameEdge, TypeEdge>(it) {
         }
     };
 

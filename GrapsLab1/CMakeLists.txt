@@ -7,4 +7,5 @@ add_executable(GrapsLab1 main.cpp
         GraphComponents/Vertex.h
         GraphComponents/Edge.h
         Graph.h
-        Сommon/CommonIterators/MapSecondElementIterator.h)
+        Сommon/CommonIterators/MapSecondElementIterator.h
+        GraphAlgorithm/dijkstrasAlgorithm.h)

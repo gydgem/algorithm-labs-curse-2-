@@ -11,12 +11,16 @@
 
 namespace hgem {
 
-    template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    template<class VertexNameT, class VertexWeightT, class EdgeNameT, class EdgeWeightT>
     class Vertex;
 
-    template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>
+    template<class VertexNameT, class VertexWeightT, class EdgeNameT, class EdgeWeightT>
     class Edge {
     public:
+        using TypeNameVertex = VertexNameT;
+        using TypeWeightVertex = VertexWeightT;
+        using TypeNameEdge = EdgeNameT;
+        using TypeWeightEdge = EdgeWeightT;
         using TypeVertex = Vertex<TypeNameVertex, TypeWeightVertex, TypeNameEdge, TypeWeightEdge>;
 
     private:

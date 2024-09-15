@@ -38,19 +38,19 @@ namespace hgem {
                   targetVertex(targetVertex) {
         }
 
-        TypeVertex &getSourceVertex() const {
+        TypeVertex &getSourceVertex() {
             return sourceVertex;
         }
 
-        TypeVertex &getTargetVertex() const {
+        TypeVertex &getTargetVertex() {
             return targetVertex;
         }
 
-        const TypeNameEdge &getNameEdge() const {
+        const TypeNameEdge &getNameEdge() const{
             return nameEdge;
         }
 
-        const TypeWeightEdge &getWeightEdge() const {
+        const TypeWeightEdge &getWeightEdge() const{
             return weightEdge;
         }
     };

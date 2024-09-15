@@ -86,6 +86,14 @@ namespace hgem {
         iterator end() {
             return iterator(outgoingEdges.end());
         }
+
+        iterator begin() const{
+            return iterator(outgoingEdges.begin());
+        }
+
+        iterator end() const{
+            return iterator(outgoingEdges.end());
+        }
     };
 
     template<class TypeNameVertex, class TypeWeightVertex, class TypeNameEdge, class TypeWeightEdge>

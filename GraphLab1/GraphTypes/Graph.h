@@ -7,9 +7,9 @@
 
 #include <bits/stdc++.h>
 
-#include "GraphComponents/Edge.h"
-#include "GraphComponents/Vertex.h"
-#include "Сommon/CommonIterators/MapSecondElementIterator.h"
+#include "../GraphComponents/Edge.h"
+#include "../GraphComponents/Vertex.h"
+#include "../Сommon/CommonIterators/MapSecondElementIterator.h"
 #include <map>
 
 namespace hgem {
@@ -67,7 +67,7 @@ namespace hgem {
             sourceVertex.bindOutgoingEdge(edges.find(nameEdge)->second);
         }
 
-        TypeVertex &getVertex(const TypeNameVertex &nameVertex) {
+        TypeVertex &getVertex(const TypeNameVertex &nameVertex){
             if (vertices.find(nameVertex) == vertices.end()) {
                 throw std::invalid_argument("Vertex not found");
             }
@@ -75,7 +75,7 @@ namespace hgem {
             return vertices.find(nameVertex)->second;
         }
 
-        TypeEdge &getEdge(const TypeNameEdge &nameEdge) {
+        TypeEdge &getEdge(const TypeNameEdge &nameEdge){
             if (edges.find(nameEdge) == edges.end()) {
                 throw std::invalid_argument("edge not found");
             }
@@ -91,11 +91,27 @@ namespace hgem {
             return IteratorVertices(vertices.end());
         }
 
+        IteratorVertices beginVertices() const{
+            return IteratorVertices(vertices.begin());
+        }
+
+        IteratorVertices endVertices() const{
+            return IteratorVertices(vertices.end());
+        }
+
         IteratorEdges beginEdges() {
             return IteratorEdges(edges.begin());
         }
 
         IteratorEdges endEdges() {
+            return IteratorEdges(edges.end());
+        }
+
+        IteratorEdges beginEdges() const{
+            return IteratorEdges(edges.begin());
+        }
+
+        IteratorEdges endEdges() const{
             return IteratorEdges(edges.end());
         }
     };

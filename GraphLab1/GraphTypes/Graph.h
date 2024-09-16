@@ -135,7 +135,7 @@ namespace hgem {
         friend Graph;
 
     private:
-        explicit IteratorEdges(std::map<TypeNameEdge, TypeEdge> it)
+        explicit IteratorEdges(std::map<TypeNameEdge, TypeEdge>::iterator it)
                 : MapSecondElementIterator<TypeNameEdge, TypeEdge>(it) {
         }
     };

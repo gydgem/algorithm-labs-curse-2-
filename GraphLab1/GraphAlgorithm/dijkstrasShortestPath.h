@@ -15,9 +15,9 @@ namespace hgem {
             class Container = std::unordered_map<typename TypeGraph::TypeNameVertex, typename TypeGraph::TypeWeightEdge>,
             class Merger = std::plus<typename TypeGraph::TypeWeightEdge>,
             class Compare = std::less<typename TypeGraph::TypeWeightEdge>>
-    Container CalcDijkstraShortestPathsIgnoreVertexWeight(TypeGraph &graph,
-                                                          typename TypeGraph::TypeNameVertex nameStartVertex,
-                                                          typename TypeGraph::TypeWeightEdge weightStart = typename TypeGraph::TypeWeightEdge()) {
+    Container dijkstraShortestPathsIgnoreVertexWeight(TypeGraph &graph,
+                                                      typename TypeGraph::TypeNameVertex nameStartVertex,
+                                                      typename TypeGraph::TypeWeightEdge weightStart = typename TypeGraph::TypeWeightEdge()) {
         Merger merger;
         Compare compare;
 
@@ -27,12 +27,12 @@ namespace hgem {
                     return compare(valueFirst.first, ValueSecond.first);
                 };
 
-        Container result;
+        Container distancesToVertices;
         std::priority_queue<std::pair<typename TypeGraph::TypeWeightEdge, typename TypeGraph::TypeVertex>,
-                std::vector<std::pair<typename TypeGraph::TypeWeightEdge, typename TypeGraph::TypeVertex>>, //не знаю на сколько это безопастно
+                std::vector<std::pair<typename TypeGraph::TypeWeightEdge, typename TypeGraph::TypeVertex>>, 
                 decltype(compareQueue)> queue(compareQueue);
         queue.emplace(weightStart, graph.getVertex(nameStartVertex));
-        result.emplace(nameStartVertex, weightStart);
+        distancesToVertices.emplace(nameStartVertex, weightStart);
 
         while (!queue.empty()) {
             auto WeightPathAndVertex = queue.top();
@@ -40,24 +40,24 @@ namespace hgem {
             auto vertex = WeightPathAndVertex.second;
             queue.pop();
 
-            if (result.find(vertex.getNameVertex()) != result.end() &&
-                compare(WeightPath,result.find(vertex.getNameVertex())->second)) {
+            if (distancesToVertices.find(vertex.getNameVertex()) != distancesToVertices.end() &&
+                compare(WeightPath, distancesToVertices.find(vertex.getNameVertex())->second)) {
                 continue;
             }
 
             for (auto edge: vertex) {
                 auto SumWeightPath = merger(edge.getWeightEdge(), WeightPath);
 
-                if (result.find(edge.getTargetVertex().getNameVertex()) == result.end()
-                    || compare(SumWeightPath, result.find(edge.getTargetVertex().getNameVertex())->second)) {
-                    result.insert_or_assign(edge.getTargetVertex().getNameVertex(), SumWeightPath);
+                if (distancesToVertices.find(edge.getTargetVertex().getNameVertex()) == distancesToVertices.end()
+                    || compare(SumWeightPath, distancesToVertices.find(edge.getTargetVertex().getNameVertex())->second)) {
+                    distancesToVertices.insert_or_assign(edge.getTargetVertex().getNameVertex(), SumWeightPath);
                     queue.emplace(SumWeightPath, edge.getTargetVertex());
                     continue;
                 }
             }
         }
 
-        return std::move(result);
+        return std::move(distancesToVertices);
     }
 
 } // hgem

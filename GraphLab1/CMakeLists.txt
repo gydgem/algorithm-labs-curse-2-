@@ -7,6 +7,12 @@ add_executable(GraphLab1 main.cpp
         GraphComponents/Vertex.h
         GraphComponents/Edge.h
         Сommon/CommonIterators/MapSecondElementIterator.h
-        GraphAlgorithm/dijkstrasAlgorithm.h
+        GraphAlgorithm/dijkstrasShortestPath.h
         GraphAlgorithm/bellmanFordShortestPath.h
-        GraphTypes/Graph.h)
+        GraphTypes/Graph.h
+        LabComponent/Task1Handler.cpp
+        LabComponent/Task1Handler.h
+        LabComponent/Task2Handler.cpp
+        LabComponent/Task2Handler.h
+        LabComponent/Program.cpp
+        LabComponent/Program.h)

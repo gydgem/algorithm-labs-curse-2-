@@ -15,4 +15,8 @@ add_executable(GraphLab1 main.cpp
         LabComponent/Task2Handler.cpp
         LabComponent/Task2Handler.h
         LabComponent/Program.cpp
-        LabComponent/Program.h)
+        LabComponent/Program.h
+        LabComponent/Task3Handler.cpp
+        LabComponent/Task3Handler.h
+        GraphAlgorithm/floydWarshallShortestPath.h
+        GraphAlgorithm/floydWarshallShortestPath.h.cpp)
